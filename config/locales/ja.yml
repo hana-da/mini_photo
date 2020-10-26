@@ -1,0 +1,10 @@
+---
+ja:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'バリデーションに失敗しました: %{errors}'
+  errors:
+    messages:
+      blank: を入力してください
+      taken: はすでに存在します
