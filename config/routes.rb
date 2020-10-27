@@ -3,6 +3,6 @@
 Rails.application.routes.draw do
   resource :user, only: [] do
     resource :session, only: %i[new create]
-    resources :photos, only: :index
+    resources :photos, only: %i[index new]
   end
 end

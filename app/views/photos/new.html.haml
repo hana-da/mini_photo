@@ -1,0 +1,14 @@
+%header
+  %h1 写真アップロード
+
+%main
+  = form_with model: [current_user, @photo] do |f|
+    .photo-form__title
+      = f.label :title
+      = f.text_field :title
+    .photo-form__image_file
+      = f.label :image_file
+      = f.file_field :image_file
+    .photo-form__action
+      = f.submit 'アップロード'
+      = link_to 'キャンセル', user_photos_path
