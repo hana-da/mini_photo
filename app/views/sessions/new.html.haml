@@ -1,0 +1,13 @@
+%header
+  %h1 ログイン
+
+%main
+  = form_with model: @form, url: new_user_session_path do |f|
+    .login-form__username
+      = f.label :username
+      = f.text_field :username
+    .login-form__password
+      = f.label :password
+      = f.password_field :password
+    .login-form__action
+      = f.submit 'ログインする'
