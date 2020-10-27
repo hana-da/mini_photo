@@ -1,8 +1,14 @@
 %header
   %h1 ログイン
 
+- if @form.errors.any?
+  %aside#error_explanation
+    %ul
+      - @form.errors.full_messages.each do |message|
+        %li= message
+
 %main
-  = form_with model: @form, url: new_user_session_path do |f|
+  = form_with model: @form, url: user_session_path, local: true do |f|
     .login-form__username
       = f.label :username
       = f.text_field :username
