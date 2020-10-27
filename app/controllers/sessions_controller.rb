@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     user = User.find_by(name: @form.username)
     if user&.authenticate(@form.password)
       login(user)
-      redirect_to new_user_session_path
+      redirect_to user_photos_path
     else
       @form.errors.add(:base, 'ユーザーIDまたはパスワードが違います。')
       render :new
