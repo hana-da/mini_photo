@@ -3,3 +3,7 @@
 
 %nav
   = link_to '写真をアップロード', new_user_photo_path
+
+%main
+  %ul.photos-index
+    = render @photos

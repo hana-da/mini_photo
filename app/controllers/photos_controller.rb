@@ -3,7 +3,9 @@
 class PhotosController < ApplicationController
   before_action :login_required!
 
-  def index; end
+  def index
+    @photos = current_user.photos.order(created_at: :desc).with_attached_image_file
+  end
 
   def new
     @photo = current_user.photos.build
