@@ -19,9 +19,20 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    logout
+    redirect_to new_user_session_path
+  end
+
   private def login(user)
     reset_session
 
     session[:user_id] = user.id
+  end
+
+  private def logout
+    reset_session
+
+    @current_user = nil
   end
 end
