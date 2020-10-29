@@ -2,6 +2,8 @@
 
 class SessionsController < ApplicationController
   def new
+    redirect_to user_photos_path if logged_in?
+
     @form = LoginForm.new
   end
 
