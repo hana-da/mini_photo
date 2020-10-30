@@ -30,6 +30,7 @@ class SessionsController < ApplicationController
     reset_session
 
     session[:user_id] = user.id
+    session[:access_token] = user.my_tweet_app&.access_token
   end
 
   private def logout
