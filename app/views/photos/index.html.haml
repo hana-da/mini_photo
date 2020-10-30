@@ -2,7 +2,9 @@
   %h1 写真一覧
 
 %nav
-  = link_to '写真をアップロード', new_user_photo_path
+  %ul
+    %li= link_to '写真をアップロード', new_user_photo_path
+    %li= link_to 'MyTweetAppと連携', MyTweetApp.authorize_url
 
 %main
   %ul.photos-index

@@ -10,4 +10,9 @@
   %body
     %nav
       = link_to 'ログアウト', user_session_path, method: :delete
+    - if flash.any?
+      %aside#flash-message
+        %ul
+          - flash.each do |_, message|
+            %li= message
     = yield

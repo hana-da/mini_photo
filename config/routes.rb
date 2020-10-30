@@ -6,5 +6,7 @@ Rails.application.routes.draw do
     resources :photos, only: %i[index new create]
   end
 
+  get '/oauth/callback', to: 'my_tweet_apps#callback'
+
   root 'sessions#new'
 end
