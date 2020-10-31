@@ -10,6 +10,7 @@ class Photo < ApplicationRecord
   }.freeze
 
   belongs_to :user
+  has_one :photo_publication, dependent: :destroy
   has_one_attached :image_file
 
   validates :title, presence: true, length: { maximum: 30 }
