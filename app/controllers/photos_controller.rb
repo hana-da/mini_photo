@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 class PhotosController < ApplicationController
-  before_action :login_required!
+  before_action :login_required!, except: :show
 
   def index
     @photos = current_user.photos.order(created_at: :desc).with_attached_image_file
+  end
+
+  def show
+    photo = PhotoPublication.find_by!(digest: params[:digest], extension: params[:format]).photo
+    send_data(photo.image_file.download, type: photo.image_file.blob.content_type, disposition: :inline)
   end
 
   def new
