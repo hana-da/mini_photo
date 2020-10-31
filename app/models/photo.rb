@@ -18,6 +18,24 @@ class Photo < ApplicationRecord
 
   validate :must_be_acceptable_image_file
 
+  # 写真を公開状態にする
+  #
+  # @return [self]
+  def publish!
+    return self if published?
+
+    blob = image_file.blob
+    create_photo_publication!(
+      digest:    Base64.decode64(blob.checksum).unpack1('H*'),
+      extension: blob.filename.extension_without_delimiter
+    ).photo
+  end
+
+  # @return [true, false]
+  def published?
+    !!photo_publication
+  end
+
   private def must_be_acceptable_image_file
     return unless image_file.attached?
 
