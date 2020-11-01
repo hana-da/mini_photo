@@ -3,3 +3,7 @@
     = photo.title
   .photo-card__image
     = image_tag photo.image_file, width: 200
+  .photo-card__action
+    - if session[:access_token]
+      = form_with url: root_path do |f|
+        = f.submit 'ツイートする'
