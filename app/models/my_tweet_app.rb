@@ -12,6 +12,8 @@ class MyTweetApp < ApplicationRecord
   REDIRECT_URL = 'http://localhost:3000/oauth/callback'
   # OAuth 2.0 トークンエンドポイントURL
   TOKEN_URL = 'https://arcane-ravine-29792.herokuapp.com/oauth/token'
+  # 投稿API エンドポイントURL
+  TWEET_API_URL = 'https://arcane-ravine-29792.herokuapp.com/api/tweets'
 
   CLIENT_ID = ENV.fetch('MY_TWEET_APP_CLIENT_ID')
   CLIENT_SECRET = ENV.fetch('MY_TWEET_APP_CLIENT_SECRET')
@@ -55,6 +57,22 @@ class MyTweetApp < ApplicationRecord
       params = ActionController::Parameters.new(JSON.parse(json))
       params.required(:access_token)
       params.permit(:access_token, :token_type, :expires_in, :refresh_token, :scope, :created_at)
+    end
+  end
+
+  # access_token を使って "MyTweet App" API で投稿する
+  #
+  # @param [String] text
+  # @param [String] url
+  # @return [Net::HTTP::Response]
+  # @raise [Net::HTTPBadResponse] レスポンスが 201 Created でなかった場合
+  def post!(text:, url:)
+    tweet_api_uri = URI.parse(TWEET_API_URL)
+    request_header = { 'Content-Type' => 'application/json', 'Authorization' => "Bearer #{access_token}" }
+    post_json_string = { text: text, url: url }.to_json
+
+    Net::HTTP.post(tweet_api_uri, post_json_string, request_header).tap do |response|
+      raise(Net::HTTPBadResponse, "#{response.code} #{response.message}") unless response.code == '201'
     end
   end
 end
