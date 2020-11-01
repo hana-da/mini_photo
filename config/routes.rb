@@ -3,7 +3,9 @@
 Rails.application.routes.draw do
   resource :user, only: [] do
     resource :session, only: %i[new create destroy]
-    resources :photos, only: %i[index new create]
+    resources :photos, only: %i[index new create] do
+      resource :my_tweet_app, only: :create
+    end
   end
 
   resources :photos, only: :show, param: :digest
