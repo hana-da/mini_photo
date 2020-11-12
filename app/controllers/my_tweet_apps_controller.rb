@@ -2,6 +2,7 @@
 
 class MyTweetAppsController < ApplicationController
   before_action :login_required!
+  before_action :validate_callback_state,  only: :callback
   before_action :validate_callback_params, only: :callback
 
   # MyTweet App と OAuth2 連携する際のcallback 受け
@@ -31,6 +32,10 @@ class MyTweetAppsController < ApplicationController
   private def published_photo_url
     photo_publication = published_photo.photo_publication
     photo_url(digest: photo_publication.digest, format: photo_publication.extension)
+  end
+
+  private def validate_callback_state
+    raise ActionController::InvalidAuthenticityToken unless valid_authenticity_token?(session, params[:state])
   end
 
   private def validate_callback_params

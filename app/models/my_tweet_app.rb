@@ -19,12 +19,13 @@ class MyTweetApp < ApplicationRecord
   CLIENT_SECRET = ENV.fetch('MY_TWEET_APP_CLIENT_SECRET')
 
   # @return [String] authorization code取得用のURI
-  def self.authorize_url
+  def self.authorize_url(state)
     URI.parse(AUTHORIZE_URL).tap do |uri|
       uri.query = {
         response_type: :code,
         client_id:     CLIENT_ID,
         redirect_uri:  REDIRECT_URL,
+        state:         state,
       }.to_query
     end.to_s
   end
